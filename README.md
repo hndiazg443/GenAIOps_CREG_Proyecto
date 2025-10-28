@@ -185,72 +185,83 @@ pytest tests/test_run_eval.py
 
 ---
 
-## 🎓 Desafío para estudiantes
+## ✨ Características Implementadas
 
-🧩 Parte 1: Personalización
+Este proyecto implementa un sistema RAG completo con evaluación avanzada:
 
-1. Elige un nuevo dominio
-Ejemplos: salud, educación, legal, bancario, ambiental, etc.
+### 🎯 **1. Dominio Personalizado: Regulación Energética CREG**
 
-2. Reemplaza los documentos PDF
-Ubícalos en data/pdfs/.
+- ✅ 3 Resoluciones CREG 2025 (076, 078, 079) - 50 páginas
+- ✅ 2 Prompts especializados (didáctico y conciso)
+- ✅ Dataset de evaluación con 8 preguntas específicas de CREG
 
-3. Modifica o crea tus prompts
-Edita los archivos en app/prompts/.
+### 📊 **2. Sistema de Evaluación Dual**
 
-4. Crea un conjunto de pruebas
-En tests/eval_dataset_creg.json (o tu propio archivo), define preguntas y respuestas esperadas para evaluar a tu chatbot.
+**Evaluación Básica (`run_eval.py`):**
+- ⚡ Rápida y simple
+- 🎯 Usa `QAEvalChain` de LangChain
+- 📈 Métrica binaria: correcto/incorrecto
+- 🔧 Ideal para: debugging rápido y verificación
 
-✅ Parte 2: Evaluación Automática
+**Evaluación Avanzada (`run_eval_advanced.py`):**
+- 🔬 Sistema completo con `LabeledCriteriaEvalChain`
+- 📊 7 criterios de evaluación:
+  - ✅ **Correctness** – Precisión de la respuesta
+  - ✅ **Relevance** – Pertinencia a la pregunta
+  - ✅ **Coherence** – Estructura y fluidez
+  - ✅ **Toxicity** – Detección de lenguaje ofensivo
+  - ✅ **Harmfulness** – Identificación de contenido dañino
+  - ✅ **Helpfulness** – Utilidad para el usuario
+  - ✅ **Conciseness** – Brevedad y claridad
+- 💾 Cada criterio registra score (0-1) y razonamiento en MLflow
+- 🇪🇸 Razonamientos generados en español
 
-1. Ejecuta run_eval.py para probar tu sistema actual.
-La evaluación básica usa QAEvalChain de LangChain, que devuelve una métrica binaria: correcto / incorrecto.
+### � **3. Dashboard Avanzado Interactivo**
 
-🔧 Parte 3: Evaluación Avanzada (✅ Implementado en este proyecto)
+Dashboard completo en `app/dashboard_advanced.py`:
+- 📊 **6 secciones de visualización:**
+  1. Resumen general con KPIs principales
+  2. Gráfico de barras comparativo por criterio
+  3. Radar chart multidimensional
+  4. Tabla detallada con todos los scores
+  5. Análisis de preguntas problemáticas
+  6. Razonamientos completos en español
+- 🎨 Visualizaciones con Plotly
+- 🔍 Filtrado por experimento MLflow
 
-1. Sistema de evaluación mejorado con LabeledCriteriaEvalChain:
+### 📊 **4. Resultados del Proyecto CREG**
 
-    * ✅ "correctness" – ¿Es correcta la respuesta?
-    * ✅ "relevance" – ¿Es relevante respecto a la pregunta?
-    * ✅ "coherence" – ¿Está bien estructurada la respuesta?
-    * ✅ "toxicity" – ¿Contiene lenguaje ofensivo o riesgoso?
-    * ✅ "harmfulness" – ¿Podría causar daño la información?
-    * ✅ "helpfulness" – ¿Es útil para el usuario?
-    * ✅ "conciseness" – ¿Es concisa y directa?
+Métricas obtenidas:
+- 📈 **87.5%** de precisión en QA básica (7/8 correctas)
+- 📊 **71.2%** promedio en criterios avanzados
+- ✅ **100%** en coherence (estructura perfecta)
+- ✅ **100%** sin toxicity (lenguaje apropiado)
+- ✅ **100%** sin harmfulness (contenido seguro)
+- 🔧 Áreas de mejora: relevancia (62.5%) y concisión (50%)
 
-    * Cada criterio registra:
-        * Una métrica en MLflow (score)
-        * Un razonamiento como artefacto en español
+### �️ **5. Herramientas Adicionales**
 
-    Ver: `app/run_eval_advanced.py`
-
-📊 Parte 4: Dashboard Avanzado (✅ Implementado)
-
-1. Dashboard completo en `app/dashboard_advanced.py` con:
-
-    * ✅ Métricas por criterio (scores de 0-1)
-    * ✅ Gráfico de barras comparativo
-    * ✅ Radar chart multidimensional
-    * ✅ Tabla detallada con todos los scores
-    * ✅ Análisis de preguntas problemáticas
-    * ✅ Razonamientos del modelo en español
-
-🧪 Parte 5: Análisis y Reflexión (Ver PROGRESO_DESAFIO.md)
-
-1. Resultados del proyecto CREG:
-    * 87.5% de precisión en QA básica
-    * 71.2% promedio en criterios avanzados
-    * 100% en coherencia, sin toxicidad, sin contenido dañino
-    * Áreas de mejora: relevancia (62.5%) y concisión (50%)
-
-🚀 Bonus (✅ Implementado)
-
-- ✅ 7 criterios implementados (más allá de los 5 requeridos)
-- ✅ Razonamientos en español
-- ✅ Visualizaciones interactivas con Plotly
-- ✅ Documentación completa para instalación y compartir
-- ✅ Script de verificación automática
+- 📝 `QUICKSTART.md` – Instalación en 5 minutos
+- 📚 `INSTRUCCIONES_INSTALACION.md` – Guía completa paso a paso
+- 🔄 `COMPARTIR.md` – Cómo compartir el proyecto
+- 📊 `PROGRESO_DESAFIO.md` – Documentación detallada del desarrollo
+- ✅ `verify_installation.py` – Script de verificación automática
 
 ---
 
-¡Listo para ser usado en clase, investigación o producción educativa! 🚀
+## 🎓 Adaptación a Otros Dominios
+
+¿Quieres adaptar este proyecto a tu dominio? Sigue estos pasos:
+
+1. **Reemplaza los documentos:** Coloca tus PDFs en `data/pdfs/`
+2. **Crea tus prompts:** Edita archivos en `app/prompts/`
+3. **Define tu dataset:** Crea preguntas/respuestas en `tests/`
+4. **Regenera vectorstore:** `python -c "from app.rag_pipeline import save_vectorstore; save_vectorstore()"`
+5. **Ejecuta evaluación avanzada:** `python app/run_eval_advanced.py`
+6. **Visualiza resultados:** `streamlit run app/dashboard_advanced.py`
+
+Dominios sugeridos: salud, educación, legal, financiero, ambiental, tecnológico.
+
+---
+
+¡Sistema completo de GenAIOps listo para producción o investigación! 🚀
