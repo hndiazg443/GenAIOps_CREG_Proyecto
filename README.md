@@ -1,4 +1,4 @@
-# 🤖 Chatbot GenAI - Caso de Estudio Recursos Humanos
+# 🤖 Chatbot GenAI - Regulación Energética CREG
 
 Este proyecto demuestra cómo construir, evaluar y automatizar un chatbot de tipo RAG (Retrieval Augmented Generation) con buenas prácticas de **GenAIOps**.
 
@@ -6,7 +6,7 @@ Este proyecto demuestra cómo construir, evaluar y automatizar un chatbot de tip
 
 ## 🧠 Caso de Estudio
 
-El chatbot responde preguntas sobre beneficios, políticas internas y roles de una empresa ficticia (**Contoso Electronics**), usando como base una colección de documentos PDF internos.
+El chatbot responde preguntas sobre regulación energética colombiana basándose en documentos oficiales de la **CREG (Comisión de Regulación de Energía y Gas)**. Utiliza Resoluciones CREG 2025 como fuente de conocimiento.
 
 ---
 
@@ -16,23 +16,24 @@ El chatbot responde preguntas sobre beneficios, políticas internas y roles de u
 ├── app/
 │   ├── ui_streamlit.py           ← interfaz simple del chatbot
 │   ├── main_interface.py         ← interfaz combinada con métricas
-│   ├── run_eval.py               ← evaluación automática
+│   ├── run_eval.py               ← evaluación automática básica
+│   ├── run_eval_advanced.py      ← evaluación con 7 criterios
+│   ├── dashboard_advanced.py     ← dashboard con visualizaciones
 │   ├── rag_pipeline.py           ← lógica de ingestión y RAG
 │   └── prompts/
-│       ├── v1_asistente_rrhh.txt
-│       └── v2_resumido_directo.txt
-├── data/pdfs/                    ← documentos fuente
+│       ├── v1_asistente_creg_didactico.txt
+│       └── v2_creg_conciso.txt
+├── data/pdfs/                    ← documentos CREG (Resoluciones 076, 078, 079)
 ├── tests/
 │   ├── test_run_eval.py
-│   ├── eval_dataset.json         ← dataset de evaluación
-│   └── eval_dataset.csv
+│   └── eval_dataset_creg.json    ← dataset de evaluación CREG
 ├── .env.example
 ├── Dockerfile
-├── .devcontainer/
-│   └── devcontainer.json
-├── .github/workflows/
-│   ├── eval.yml
-│   └── test.yml
+├── QUICKSTART.md                 ← guía rápida de instalación
+├── INSTRUCCIONES_INSTALACION.md ← guía completa
+├── COMPARTIR.md                  ← cómo compartir el proyecto
+├── PROGRESO_DESAFIO.md          ← documentación del desafío
+└── verify_installation.py        ← script de verificación
 ```
 
 ---
@@ -42,10 +43,10 @@ El chatbot responde preguntas sobre beneficios, políticas internas y roles de u
 ### 1. 🧱 Preparación del entorno
 
 ```bash
-git clone https://github.com/darkanita/GenAIOps_Pycon2025 chatbot-genaiops
-cd chatbot-genaiops
-conda create -n chatbot-genaiops python=3.10 -y
-conda activate chatbot-genaiops
+git clone https://github.com/hndiazg443/GenAIOps_CREG_Proyecto.git
+cd GenAIOps_CREG_Proyecto
+conda create -n genaiops-creg python=3.10 -y
+conda activate genaiops-creg
 pip install -r requirements.txt
 cp .env.example .env  # Agrega tu API KEY de OpenAI
 ```
@@ -82,7 +83,7 @@ vectordb = load_vectorstore_from_disk()
 
 ```python
 from app.rag_pipeline import build_chain
-chain = build_chain(vectordb, prompt_version="v1_asistente_rrhh")
+chain = build_chain(vectordb, prompt_version="v1_asistente_creg_didactico")
 ```
 
 - Soporta múltiples versiones de prompt
@@ -113,10 +114,18 @@ python app/run_eval.py
 ```
 
 Esto:
-- Usa `tests/eval_dataset.json` como ground truth
+- Usa `tests/eval_dataset_creg.json` como ground truth
 - Genera respuestas usando el RAG actual
 - Evalúa con `LangChain Eval (QAEvalChain)`
 - Registra resultados en **MLflow**
+
+Para evaluación avanzada con 7 criterios:
+
+```bash
+python app/run_eval_advanced.py
+```
+
+Evalúa: correctness, relevance, coherence, toxicity, harmfulness, helpfulness, conciseness
 
 ---
 
@@ -125,19 +134,21 @@ Esto:
 Dashboard completo:
 
 ```bash
-streamlit run app/dashboard.py
+streamlit run app/dashboard_advanced.py
 ```
 
 - Tabla con todas las preguntas evaluadas
-- Gráficos de precisión por configuración (`prompt + chunk_size`)
+- Gráficos de barras por criterio
+- Radar chart multidimensional
+- Análisis de preguntas problemáticas
+- Razonamientos de evaluación en español
 - Filtrado por experimento MLflow
 
 ---
 
-### 7. 🔁 Automatización con GitHub Actions
+### 7. 🔁 Automatización con GitHub Actions (Opcional)
 
-- CI de evaluación: `.github/workflows/eval.yml`
-- Test unitarios: `.github/workflows/test.yml`
+⚠️ Los workflows de GitHub Actions han sido removidos temporalmente. Puedes recrearlos si necesitas CI/CD.
 
 ---
 
@@ -155,9 +166,10 @@ pytest tests/test_run_eval.py
 
 - 💬 Hacer preguntas al chatbot
 - 🔁 Evaluar diferentes estrategias de chunking y prompts
-- 📊 Comparar desempeño con métricas semánticas
+- 📊 Comparar desempeño con métricas semánticas avanzadas
 - 🧪 Trazar todo en MLflow
-- 🔄 Adaptar a otros dominios (legal, salud, educación…)
+- � Visualizar resultados con dashboards interactivos
+- �🔄 Adaptar a otros dominios (legal, salud, educación, financiero…)
 
 ---
 
@@ -167,9 +179,9 @@ pytest tests/test_run_eval.py
 - **FAISS** – Vectorstore
 - **Streamlit** – UI
 - **MLflow** – Registro de experimentos
-- **LangChain Eval** – Evaluación semántica
-- **GitHub Actions** – CI/CD
-- **DevContainer** – Desarrollo portable
+- **LangChain Eval** – Evaluación semántica (QA + Criteria)
+- **Plotly** – Visualizaciones interactivas
+- **GitHub** – Control de versiones
 
 ---
 
@@ -178,7 +190,7 @@ pytest tests/test_run_eval.py
 🧩 Parte 1: Personalización
 
 1. Elige un nuevo dominio
-Ejemplos: salud, educación, legal, bancario, etc.
+Ejemplos: salud, educación, legal, bancario, ambiental, etc.
 
 2. Reemplaza los documentos PDF
 Ubícalos en data/pdfs/.
@@ -187,50 +199,57 @@ Ubícalos en data/pdfs/.
 Edita los archivos en app/prompts/.
 
 4. Crea un conjunto de pruebas
-En tests/eval_dataset.json, define preguntas y respuestas esperadas para evaluar a tu chatbot.
+En tests/eval_dataset_creg.json (o tu propio archivo), define preguntas y respuestas esperadas para evaluar a tu chatbot.
 
 ✅ Parte 2: Evaluación Automática
 
 1. Ejecuta run_eval.py para probar tu sistema actual.
-Actualmente, la evaluación está basada en QAEvalChain de LangChain, que devuelve una métrica binaria: correcto / incorrecto.
+La evaluación básica usa QAEvalChain de LangChain, que devuelve una métrica binaria: correcto / incorrecto.
 
-🔧 Parte 3: ¡Tu reto! (👨‍🔬 nivel investigador)
+🔧 Parte 3: Evaluación Avanzada (✅ Implementado en este proyecto)
 
-1. Mejora el sistema de evaluación:
+1. Sistema de evaluación mejorado con LabeledCriteriaEvalChain:
 
-    * Agrega evaluación con LabeledCriteriaEvalChain usando al menos los siguientes criterios:
+    * ✅ "correctness" – ¿Es correcta la respuesta?
+    * ✅ "relevance" – ¿Es relevante respecto a la pregunta?
+    * ✅ "coherence" – ¿Está bien estructurada la respuesta?
+    * ✅ "toxicity" – ¿Contiene lenguaje ofensivo o riesgoso?
+    * ✅ "harmfulness" – ¿Podría causar daño la información?
+    * ✅ "helpfulness" – ¿Es útil para el usuario?
+    * ✅ "conciseness" – ¿Es concisa y directa?
 
-        * "correctness" – ¿Es correcta la respuesta?
-        * "relevance" – ¿Es relevante respecto a la pregunta?
-        * "coherence" – ¿Está bien estructurada la respuesta?
-        * "toxicity" – ¿Contiene lenguaje ofensivo o riesgoso?
-        * "harmfulness" – ¿Podría causar daño la información?
-
-    * Cada criterio debe registrar:
-
+    * Cada criterio registra:
         * Una métrica en MLflow (score)
+        * Un razonamiento como artefacto en español
 
-    * Y opcionalmente, un razonamiento como artefacto (reasoning)
+    Ver: `app/run_eval_advanced.py`
 
-    📚 Revisa la [documentación de LabeledCriteriaEvalChain](https://python.langchain.com/api_reference/langchain/evaluation/langchain.evaluation.criteria.eval_chain.LabeledCriteriaEvalChain.html) para implementarlo.
+📊 Parte 4: Dashboard Avanzado (✅ Implementado)
 
-📊 Parte 4: Mejora el dashboard
+1. Dashboard completo en `app/dashboard_advanced.py` con:
 
-1. Extiende dashboard.py o main_interface.py para visualizar:
+    * ✅ Métricas por criterio (scores de 0-1)
+    * ✅ Gráfico de barras comparativo
+    * ✅ Radar chart multidimensional
+    * ✅ Tabla detallada con todos los scores
+    * ✅ Análisis de preguntas problemáticas
+    * ✅ Razonamientos del modelo en español
 
-    * Las métricas por criterio (correctness_score, toxicity_score, etc.).
-    * Una opción para seleccionar y comparar diferentes criterios en gráficos.
-    * (Opcional) Razonamientos del modelo como texto.    
+🧪 Parte 5: Análisis y Reflexión (Ver PROGRESO_DESAFIO.md)
 
-🧪 Parte 5: Presenta y reflexiona
-1. Compara configuraciones distintas (chunk size, prompt) y justifica tu selección.
-    * ¿Cuál configuración genera mejores respuestas?
-    * ¿En qué fallan los modelos? ¿Fueron tóxicos o incoherentes?
-    * Usa evidencias desde MLflow y capturas del dashboard.
+1. Resultados del proyecto CREG:
+    * 87.5% de precisión en QA básica
+    * 71.2% promedio en criterios avanzados
+    * 100% en coherencia, sin toxicidad, sin contenido dañino
+    * Áreas de mejora: relevancia (62.5%) y concisión (50%)
 
-🚀 Bonus
+🚀 Bonus (✅ Implementado)
 
-- ¿Te animas a crear un nuevo criterio como "claridad" o "creatividad"? Puedes definirlo tú mismo y usarlo con LabeledCriteriaEvalChain.
+- ✅ 7 criterios implementados (más allá de los 5 requeridos)
+- ✅ Razonamientos en español
+- ✅ Visualizaciones interactivas con Plotly
+- ✅ Documentación completa para instalación y compartir
+- ✅ Script de verificación automática
 
 ---
 
