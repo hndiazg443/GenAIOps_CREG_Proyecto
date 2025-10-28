@@ -13,8 +13,8 @@
 ### 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/darkanita/GenAIOps_Pycon2025.git
-cd GenAIOps_Pycon2025
+git clone https://github.com/hndiazg443/GenAIOps_CREG_Proyecto.git
+cd GenAIOps_CREG_Proyecto
 ```
 
 ### 2. Crear entorno virtual (Recomendado)
@@ -107,7 +107,7 @@ Abre tu navegador en: http://localhost:5000
 ## 📊 Estructura del Proyecto
 
 ```
-GenAIOps_Pycon2025/
+GenAIOps_CREG_Proyecto/
 ├── app/
 │   ├── ui_streamlit.py              # Chatbot simple
 │   ├── main_interface.py            # Interfaz combinada
@@ -231,7 +231,7 @@ Si encuentras problemas o tienes sugerencias:
 ## 📧 Contacto
 
 **Proyecto:** GenAIOps PyCon 2025  
-**Repositorio:** https://github.com/darkanita/GenAIOps_Pycon2025  
+**Repositorio:** https://github.com/hndiazg443/GenAIOps_CREG_Proyecto  
 **Dominio:** Regulación Energética Colombiana (CREG)
 
 ---

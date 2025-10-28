@@ -17,8 +17,8 @@ git push origin main
 
 **La otra persona puede clonar:**
 ```bash
-git clone https://github.com/darkanita/GenAIOps_Pycon2025.git
-cd GenAIOps_Pycon2025
+git clone https://github.com/hndiazg443/GenAIOps_CREG_Proyecto.git
+cd GenAIOps_CREG_Proyecto
 ```
 
 ---
@@ -28,13 +28,13 @@ cd GenAIOps_Pycon2025
 ```bash
 # Crear ZIP (excluyendo archivos innecesarios)
 cd ..
-tar -czf GenAIOps_CREG.tar.gz GenAIOps_Pycon2025/ \
-  --exclude='GenAIOps_Pycon2025/__pycache__' \
-  --exclude='GenAIOps_Pycon2025/**/__pycache__' \
-  --exclude='GenAIOps_Pycon2025/mlruns' \
-  --exclude='GenAIOps_Pycon2025/.git' \
-  --exclude='GenAIOps_Pycon2025/vectorstore' \
-  --exclude='GenAIOps_Pycon2025/.env'
+tar -czf GenAIOps_CREG.tar.gz GenAIOps_CREG_Proyecto/ \
+  --exclude='GenAIOps_CREG_Proyecto/__pycache__' \
+  --exclude='GenAIOps_CREG_Proyecto/**/__pycache__' \
+  --exclude='GenAIOps_CREG_Proyecto/mlruns' \
+  --exclude='GenAIOps_CREG_Proyecto/.git' \
+  --exclude='GenAIOps_CREG_Proyecto/vectorstore' \
+  --exclude='GenAIOps_CREG_Proyecto/.env'
 
 # Compartir archivo: GenAIOps_CREG.tar.gz
 ```
@@ -42,7 +42,7 @@ tar -czf GenAIOps_CREG.tar.gz GenAIOps_Pycon2025/ \
 La otra persona debe:
 ```bash
 tar -xzf GenAIOps_CREG.tar.gz
-cd GenAIOps_Pycon2025
+cd GenAIOps_CREG_Proyecto
 ```
 
 ---
@@ -139,7 +139,7 @@ git reset HEAD .env
 ## 📧 Información de contacto
 
 **Proyecto:** GenAIOps PyCon 2025  
-**Repositorio:** https://github.com/darkanita/GenAIOps_Pycon2025  
+**Repositorio:** https://github.com/hndiazg443/GenAIOps_CREG_Proyecto  
 **Dominio:** Regulación Energética Colombiana (CREG)
 
 ---
